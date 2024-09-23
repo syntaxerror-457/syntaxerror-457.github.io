@@ -112,7 +112,7 @@
             attendance_weight = 0.10  # 10% weight for attendance
             prelim_exam_weight = 0.60  # 60% weight for prelim exam
             class_standing_weight = 0.30  # 30% weight for class standing
-            prelim_grade = round((attendance * attendance_weight) + (prelim_exam * prelim_exam_weight) + (overall_performance * class_standing_weight), 2)
+            prelim_grade = round(( attendance * attendance_weight) + (prelim_exam * prelim_exam_weight) + (overall_performance * class_standing_weight), 2)
 
             # Calculate required grades for 75% and 90%
             passing_grade = 75
@@ -140,12 +140,12 @@
 	    result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.<br>"
 	    result_text += f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
 
-            Element("result").write(result_text)
+            Element("result").element.innerHTML = result_text
 
             # Show the result section
             Element("result").element.style.display = "block"
         except ValueError:
-            Element("result").write("Invalid input. Please enter numbers only.")
+            Element("result").element.innerHTML = "Invalid input. Please enter numbers only."
             Element("result").element.style.display = "block"
             Element("result").element.style.color = "red"  
 
