@@ -88,29 +88,30 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('calculateBtn').addEventListener('click', function() {
-            try {
-                var absences = parseFloat(document.getElementById('absences').value);
-                var recitation = parseFloat(document.getElementById('recitation').value) * 0.4;
-                var quiz = parseFloat(document.getElementById('quiz').value) * 0.3;
-                var requirements = parseFloat(document.getElementById('requirements').value) * 0.3;
-                var prelim_exam = parseFloat(document.getElementById('prelim_exam').value) * 0.6;
+    <py-script>
+        from pyscript import Element
 
-                // Validate input ranges
-                if (recitation > 100 || quiz > 100 || requirements > 100 || prelim_exam > 100) {
-                    throw new Error("All grades must be between 0 and 100.");
-                }
+        def calculate_grade():
+            try:
+                absences = float(Element("absences").element.value)
+                recitation = float(Element("recitation").element.value) * 0.4
+                quiz = float(Element("quiz").element.value) * 0.3
+                requirements = float(Element("requirements").element.value) * 0.3
+                prelim_exam = float(Element("prelim_exam").element.value) * 0.6
 
-                var attendance_percentage = (100 - absences);  // Assuming 100 total classes
-                var attendance_message;
-                var final_grade_message;
-                var final_grade_color;
+                # Validate input ranges
+                if recitation > 100 or quiz > 100 or requirements > 100 or prelim_exam > 100:
+                    Element("result").element.innerHTML = "All grades must be between 0 and 100."
+                    return
 
-                if (absences >= 4) {
-                    final_grade_message = "FAILED";
-                    final_grade_color = "red";
-                    attendance_message = "Failed due to excessive absences.";
+                attendance_percentage = (100 - absences)  # Assuming 100 total classes
+                attendance_message = ""
+                final_grade_message = ""
+                final_grade_color = ""
+
+                if absences >= 4:
+                    final_grade_message = "FAILED"
+                    final_grade_color = "red"
 
                 document.getElementById('finalGrade').innerHTML = <span style='color: ${final_grade_color};'>${final_grade_message}</span>;
                 document.getElementById('attendanceMessage').textContent = attendance_message;
@@ -127,6 +128,6 @@
             document.getElementById('requirements').value = (Math.random() * 100).toFixed(2);
             document.getElementById('prelim_exam').value = (Math.random() * 100).toFixed(2);
         });
-    </script>
+    </py-script>
 </body>
 </html>
