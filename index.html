@@ -65,6 +65,7 @@
         from pyscript import Element
 
         def calculate_grades(event):
+            console.log("Button clicked!")
             try:
                 # Get values from inputs
                 attendance = float(Element("attendance").element.value) * 0.1
@@ -103,16 +104,16 @@
 
                 # Update the content of the result element
                 result_text = f"Your Prelim Grade is: {prelim_grade:.2f}<br>"
-                result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.<br>"
+                result_text += f"To pass with 75%, you need a Midterm grade of {required_mid term_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.<br>"
                 result_text += f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
 
-                Element("result").write(result_text)
+                Element("result").element.innerHTML = result_text
 
                 # Show the result section
                 Element("result").element.style.display = "block"
             except ValueError:
-                Element("result").write("Invalid input. Please enter numbers only.")
-                Element("result").element .style.display = "block"
+                Element("result").element.innerHTML = "Invalid input. Please enter numbers only."
+                Element("result").element.style.display = "block"
 
     # Attach event listener to the button
     Element("calculateButton").listen("click", calculate_grades)
