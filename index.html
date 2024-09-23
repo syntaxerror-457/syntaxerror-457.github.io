@@ -82,16 +82,16 @@
                 prelim_grade = round(attendance + overall_performance + prelim_exam, 2)
 
                 # Calculate required grades for 75% and 90%
-                required_midterm_75 = (75 - 20 * prelim_grade) / 0.3
-                required_final_75 = (75 - 20 * prelim_grade - 30 * required_midterm_75) / 0.5
+                midterm_75 = (75 - 0.2 * prelim_grade) / 0.3
+		final_75 = (75 - 0.2 * prelim_grade - 0.3 * midterm_75) / 0.5
 
-                required_midterm_90 = (90 - 20 * prelim_grade) / 0.3
-                required_final_90 = (90 - 20 * prelim_grade - 30 * required_midterm_90) / 0.5
+		midterm_90 = (90 - 0.2 * prelim_grade) / 0.3
+		final_90 = (90 - 0.2 * prelim_grade - 0.3 * midterm_90) / 0.5
 
                 # Update the content of the result element
                 result_text = f"Your Prelim Grade is: {prelim_grade:.2f}\n"
-                result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_75:.2f} and a Final grade of {required_final_75:.2f}.\n"
-                result_text += f"To achieve 90%, you need a Midterm grade of {required_midterm_90:.2f} and a Final grade of {required_final_90:.2f}."
+		result_text += f"To pass with 75%, you need a Midterm grade of {midterm_75:.2f} and a Final grade of {final_75:.2f}.\n"
+		result_text += f"To achieve 90%, you need a Midterm grade of {midterm_90:.2f} and a Final grade of {final_90:.2f}."
 
                 Element("result").write(result_text)
 
