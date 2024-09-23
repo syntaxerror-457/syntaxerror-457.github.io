@@ -76,7 +76,7 @@
 
             # Check if values are within the range of 0 to 100
             if not (0 <= absences <= 100 and 0 <= recitation <= 100 and 0 <= quiz <= 100 and 0 <= requirements <= 100 and 0 <= prelim_exam <= 100):
-                Element("result").write("Error: You can only enter numbers between 0 and 100.")
+                Element("result").write("Error: You Can Only Enter Numbers Between 0 and 100.")
                 Element("result").element.style.display = "block"
                 Element("result").element.style.color = "red"  # Add this line to make the error message red
                 return
