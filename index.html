@@ -61,6 +61,7 @@
     <button id="calculateButton">Calculate Grades</button>
     <p id="result"></p>
 
+    <!-- PyScript code -->
     <py-script>
         from pyscript import Element
 
@@ -90,7 +91,7 @@
                 current_total = prelim_grade * prelim_percent
                 required_total = passing_grade - current_total
                 if required_total > 0:
-                    required_midterm_and_final = required_total / (midterm_percent + final_percent )
+                    required_midterm_and_final = required_total / (midterm_percent + final_percent)
                 else:
                     required_midterm_and_final = 0
 
@@ -102,20 +103,20 @@
                     required_midterm_and_final_90 = 0
 
                 # Update the content of the result element
-                result_text = f"Your Prelim Grade is: {prelim_grade:.2f}<br>"
-                result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.<br>"
+                result_text = f"Your Prelim Grade is: {prelim_grade:.2f}\n"
+                result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.\n"
                 result_text += f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
 
-                Element("result").element.innerHTML = result_text
+                Element("result").write(result_text)
 
                 # Show the result section
                 Element("result").element.style.display = "block"
             except ValueError:
-                Element("result").element.innerHTML = "Invalid input. Please enter numbers only."
+                Element("result").write("Invalid input. Please enter numbers only.")
                 Element("result").element.style.display = "block"
 
-        # Attach event listener to the Calculate Grade button
-        Element("calculateButton").listen("click", calculate_grades)
+        # Attach event listener to the button
+        Element("calculateButton").element.onclick = calculate_grades
     </py-script>
 </body>
 </html>
