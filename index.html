@@ -51,79 +51,79 @@
     </style>
 </head>
 <body>
-    <!-- HTML elements for user input -->
-	
-    <input type="number" id="attendance" placeholder="Attendance" />
-    <input type="number" id="recitation" placeholder="Recitation" />
-    <input type="number" id="quiz" placeholder="Quiz" />
-    <input type="number" id="requirements" placeholder="Requirements" />
-    <input type="number" id="prelim_exam" placeholder="Prelim Exam" />
-    <button id="calculateButton">Calculate Grades</button>
-    <p id="result"></p>
+    <!-- HTML elements for user input -->	
+<input type="number" id="attendance" placeholder="Attendance" />
+<input type="number" id="recitation" placeholder="Recitation" />
+<input type="number" id="quiz" placeholder="Quiz" />
+<input type="number" id="requirements" placeholder="Requirements" />
+<input type="number" id="prelim_exam" placeholder="Prelim Exam" />
+<button id="calculateButton">Calculate Grades</button>
+
+<!-- Result section -->
+<div id="result" style="display: none;">
+    <h2>Result:</h2>
+    <p>Prelim Grade: <span id="prelimGrade"></span></p>
+    <p>Midterm Grade (required): <span id="midtermGrade"></span></p>
+    <p>Finals Grade (required): <span id="finalGrade"></span></p>
+    <p id="passMessage"></p>
+    <p id="deansMessage"></p>
+</div>
 
     <!-- PyScript code -->
     <py-script>
         from pyscript import Element
 
         def calculate_grades(event):
-            try:
-                # Get values from inputs
-                attendance = float(Element("attendance").element.value) * 0.1
-                recitation = float(Element("recitation").element.value) * 0.4
-                quiz = float(Element("quiz").element.value) * 0.3
-                requirements = float(Element("requirements").element.value) * 0.3
-                prelim_exam = float(Element("prelim_exam").element.value) * 0.6
+    try:
+        # Get values from inputs
+        attendance = float(Element("attendance").element.value) * 0.1
+        recitation = float(Element("recitation").element.value) * 0.4
+        quiz = float(Element("quiz").element.value) * 0.3
+        requirements = float(Element("requirements").element.value) * 0.3
+        prelim_exam = float(Element("prelim_exam").element.value) * 0.6
 
-                # Calculate performance task and overall performance
-                performance_task = recitation + quiz + requirements
-                overall_performance = performance_task * 0.3
+        # Calculate performance task and overall performance
+        performance_task = recitation + quiz + requirements
+        overall_performance = performance_task * 0.3
 
-                # Calculate final grade
-                prelim_grade = round(attendance + overall_performance + prelim_exam, 2)
+        # Calculate final grade
+        prelim_grade = round(attendance + overall_performance + prelim_exam, 2)
 
-                # Calculate required grades for 75% and 90%
-                passing_grade = 75
-                deans_lister_grade = 90
-                prelim_percent = 0.20
-                midterm_percent = 0.30
-                final_percent = 0.50
+        # Calculate required grades for 75% and 90%
+        passing_grade = 75
+        deans_lister_grade = 90
+        prelim_percent = 0.20
+        midterm_percent = 0.30
+        final_percent = 0.50
 
-                current_total = prelim_grade * prelim_percent
-                required_total = passing_grade - current_total
-                if required_total > 0:
-                    required_midterm_and_final = required_total / (midterm_percent + final_percent)
-                else:
-                    required_midterm_and_final = 0
+        current_total = prelim_grade * prelim_percent
+        required_total = passing_grade - current_total
+        if required_total > 0:
+            required_midterm_and_final = required_total / (midterm_percent + final_percent)
+        else:
+            required_midterm_and_final = 0
 
-                current_total_90 = prelim_grade * prelim_percent
-                required_total_90 = deans_lister_grade - current_total_90
-                if required_total_90 > 0:
-                    required_midterm_and_final_90 = required_total_90 / (midterm_percent + final_percent)
-                else:
-                    required_midterm_and_final_90 = 0
+        current_total_90 = prelim_grade * prelim_percent
+        required_total_90 = deans_lister_grade - current_total_90
+        if required_total_90 > 0:
+            required_midterm_and_final_90 = required_total_90 / (midterm_percent + final_percent)
+        else:
+            required_midterm_and_final_90 = 0
 
-                # Update the content of the result element
-		Element("result").element.innerHTML = ""
-		p1 = Element("p")
-		p1.element.innerHTML = f"Your Prelim Grade is: {prelim_grade:.2f}"
-		Element("result").element.appendChild(p1)
+        # Update result display
+        Element("prelimGrade").element.innerHTML = f" {prelim_grade:.2f}%"
+        Element("midtermGrade").element.innerHTML = f" {required_midterm_and_final:.2f}%"
+        Element("finalGrade").element.innerHTML = f" {required_midterm_and_final:.2f}%"
+        Element("passMessage").element.innerHTML = f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}."
+        Element("deansMessage").element.innerHTML = f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
 
-		p2 = Element("p")
-		p2.element.innerHTML = f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}."
-		Element("result").element.appendChild(p2)
+        # Show result section
+        Element("result").element.style.display = "block"
+    except ValueError:
+        Element("result").element.innerHTML = "Invalid input. Please enter numbers only."
+        Element("result").element.style.display = "block"
 
-		p3 = Element("p")
-		p3.element.innerHTML = f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
-		Element("result").element.appendChild(p3)
-
-		# Show the result section
-		Element("result").element.style.display = "block"
-         	   except ValueError:
-                Element("result").write("Invalid input. Please enter numbers only.")
-                Element("result").element.style.display = "block"
-
-        # Attach event listener to the button
-        Element("calculateButton").element.onclick = calculate_grades
-    </py-script>
+# Attach event listener to the button
+Element("calculateButton").element.onclick = calculate_grades
 </body>
 </html>
