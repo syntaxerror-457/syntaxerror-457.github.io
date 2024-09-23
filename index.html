@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator</title>
+    <!-- Include PyScript -->
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #0072ff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #005bb5;
+        }
+
+        #result {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        #result span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Grade Calculator</h1>
+        <form id="gradeForm">
+            <input type="number" id="absences" name="absences" step="1" min="0" placeholder="Number of Absences" required>
+            <input type="number" id="recitation" name="recitation" step="0.01" min="0" max="100" placeholder="Recitation (40%)" required>
+            <input type="number" id="quiz" name="quiz" step="0.01" min="0" max="100" placeholder="Quiz (30%)" required>
+            <input type="number" id="requirements" name="requirements" step="0.01" min="0" max="100" placeholder="Requirements (30%)" required>
+            <input type="number" id="prelim_exam" name="prelim_exam" step="0.01" min="0" max="100" placeholder="Prelim Exam (60%)" required>
+            <button type="button" id="calculateBtn">Calculate</button>
+            <button type="button" id="randomizeBtn">Randomize Grades</button>
+        </form>
+
+        <div id="result">
+            <p>Your Prelim Grade is: <span id="finalGrade"></span></p>
+            <p id="attendanceMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            try {
+                var absences = parseFloat(document.getElementById('absences').value);
+                var recitation = parseFloat(document.getElementById('recitation').value) * 0.4;
+                var quiz = parseFloat(document.getElementById('quiz').value) * 0.3;
+                var requirements = parseFloat(document.getElementById('requirements').value) * 0.3;
+                var prelim_exam = parseFloat(document.getElementById('prelim_exam').value) * 0.6;
+
+                // Validate input ranges
+                if (recitation < 0 || recitation > 100) throw new Error("Recitation grade must be between 0 and 100.");
+                if (quiz < 0 || quiz > 100) throw new Error("Quiz grade must be between 0 and 100.");
+                if (requirements < 0 || requirements > 100) throw new Error("Requirements grade must be between 0 and 100.");
+                if (prelim_exam < 0 || prelim_exam > 100) throw new Error("Prelim exam grade must be between 0 and 100.");
+
+                var attendance_percentage = (100 - absences);  // Assuming 100 total classes
+                var attendance_message;
+                var final_grade_message;
+                var final_grade_color;
+
+                if (absences >= 4) {
+                    final_grade_message = "FAILED";
+                    final_grade_color = "red";
+                    attendance_message = "Failed due to excessive absences.";
+                } else if (attendance_percentage < 90) {
+                    attendance_message = "Attendance is below the required 90%.";
+                } else {
+                    attendance_message = "Attendance is satisfactory.";
+                    var performance_task = recitation + quiz + requirements;
+                    var overall_performance = performance_task * 0.3;
+                    var final_grade = Math.round(attendance_percentage * 0.1 + overall_performance + prelim_exam, 2);
+                    final_grade_message = final_grade;
+                    final_grade_color = "inherit";  // Default color
+                }
+
+                document.getElementById('finalGrade').innerHTML = <span style='color: ${final_grade_color};'>${final_grade_message}</span>;
+                document.getElementById('attendanceMessage').textContent = attendance_message;
+                document.getElementById('result').style.display = 'block';
+
+            } catch (e) {
+                document.getElementById('result').textContent = Invalid input. Please enter numbers only. Error: ${e.message};
+            }
+        });
+
+        document.getElementById('randomizeBtn').addEventListener('click', function() {
+            document.getElementById('recitation').value = (Math.random() * 100).toFixed(2);
+            document.getElementById('quiz').value = (Math.random() * 100).toFixed(2);
+            document.getElementById('requirements').value = (Math.random() * 100).toFixed(2);
+            document.getElementById('prelim_exam').value = (Math.random() * 100).toFixed(2);
+        });
+    </script>
+</body>
+</html>
