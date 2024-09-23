@@ -112,7 +112,7 @@
             attendance_weight = 0.10  # 10% weight for attendance
             prelim_exam_weight = 0.60  # 60% weight for prelim exam
             class_standing_weight = 0.30  # 30% weight for class standing
-            prelim_grade = round(( attendance * attendance_weight) + (prelim_exam * prelim_exam_weight) + (overall_performance * class_standing_weight), 2)
+            prelim_grade = round(( attendance * attendance_weight ) + (prelim_exam * prelim_exam_weight) + (overall_performance * class_standing_weight), 2)
 
             # Calculate required grades for 75% and 90%
             passing_grade = 75
@@ -150,7 +150,8 @@
             Element("result").element.style.color = "red"  
 
     # Attach event listener to the button
-    Element("calculateButton").element.onclick = calculate_grades
+    calculate_button = Element("calculateButton")
+    calculate_button.element.onclick = lambda event: calculate_grades(event)
 </py-script>
 </body>
 </html>
