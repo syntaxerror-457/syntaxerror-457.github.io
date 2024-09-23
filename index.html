@@ -62,12 +62,9 @@
     <p id="result"></p>
 
     <py-script>
-        console.log("Script executed!")
         from pyscript import Element
-        Element("calculateButton").listen("click", calculate_grades)
 
         def calculate_grades(event):
-            console.log("Button clicked!")
             try:
                 # Get values from inputs
                 attendance = float(Element("attendance").element.value) * 0.1
@@ -100,13 +97,13 @@
                 current_total_90 = prelim_grade * prelim_percent
                 required_total_90 = deans_lister_grade - current_total_90
                 if required_total_90 > 0:
-                    required_midterm_and_final_90 = required_total_90 / (midterm_percent + final_percent)
+		    required_midterm_and_final_90 = required_total_90 / (midterm_percent + final_percent)
                 else:
-                    required_midterm _and_final_90 = 0
+                    required_midterm_and_final_90 = 0
 
                 # Update the content of the result element
                 result_text = f"Your Prelim Grade is: {prelim_grade:.2f}<br>"
-                result_text += f"To pass with 75%, you need a Midterm grade of {required_mid term_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.<br>"
+                result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.<br>"
                 result_text += f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
 
                 Element("result").element.innerHTML = result_text
@@ -116,6 +113,8 @@
             except ValueError:
                 Element("result").element.innerHTML = "Invalid input. Please enter numbers only."
                 Element("result").element.style.display = "block"
+
+        Element("calculateButton").listen("click", calculate_grades)
     </py-script>
 </body>
 </html>
