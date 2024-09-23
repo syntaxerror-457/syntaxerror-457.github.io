@@ -92,6 +92,7 @@ def calculate_grades():
         Element("result").element.style.display = "block"
 
 def populate_inputs():
+    def populate_inputs():
     Element("attendance").value = 90
     Element("recitation").value = 100
     Element("quiz").value = 95
@@ -99,8 +100,11 @@ def populate_inputs():
     Element("prelim_exam").value = 80
 
 # Correct Event Listener Attachment
-Element("calculateButton").on("click", calculate_grades)
-Element("populateButton").on("click", populate_inputs)
+calculate_button = Element("calculateButton").element
+calculate_button.addEventListener("click", calculate_grades)
+
+populate_button = Element("populateButton").element
+populate_button.addEventListener("click", populate_inputs)
     </py-script>
 </body>
 </html>
