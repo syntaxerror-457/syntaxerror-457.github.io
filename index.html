@@ -65,6 +65,7 @@
 <!-- PyScript code -->
 <!-- PyScript code -->
 <!-- PyScript code -->
+<!-- PyScript code -->
 <py-script>
     from pyscript import Element
 
@@ -84,8 +85,10 @@
                 return
 
             # Calculate performance task and overall performance
-            performance_task = recitation + quiz + requirements
-            overall_performance = performance_task * 0.3
+            recitation_weight = 0.30  # 30% weight for recitation
+            quiz_weight = 0.40  # 40% weight for quiz
+            requirements_weight = 0.30  # 30% weight for requirements
+            overall_performance = round((recitation * recitation_weight) + (quiz * quiz_weight) + (requirements * requirements_weight), 2)
 
             # Calculate final grade
             attendance_weight = 0.10  # 10% weight for attendance
