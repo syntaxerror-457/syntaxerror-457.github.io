@@ -103,21 +103,15 @@
                     required_midterm_and_final_90 = 0
 
                 # Update the content of the result element
-		result_text1 = f"Your Prelim Grade is: {prelim_grade:.2f}"
-		result_text2 = f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}."
-		result_text3 = f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
+		result_text = f"Your Prelim Grade is: {prelim_grade:.2f}<br>"
+		result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.<br>"
+		result_text += f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
 
-		Element("result").element.innerHTML = ""
-		p1 = Element("result").element.appendChild(Element("p"))
-		p1.innerHTML = result_text1
-		p2 = Element("result").element.appendChild(Element("p"))
-		p2.innerHTML = result_text2
-		p3 = Element("result").element.appendChild(Element("p"))
-		p3.innerHTML = result_text3
+		Element("result").element.innerHTML = result_text
 
-                # Show the result section
-                Element("result").element.style.display = "block"
-            except ValueError:
+		# Show the result section
+		Element("result").element.style.display = "block"
+      		      except ValueError:
                 Element("result").write("Invalid input. Please enter numbers only.")
                 Element("result").element.style.display = "block"
 
