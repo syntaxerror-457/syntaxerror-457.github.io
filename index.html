@@ -62,7 +62,9 @@
     <p id="result"></p>
 
     <py-script>
+        console.log("Script executed!")
         from pyscript import Element
+        Element("calculateButton").listen("click", calculate_grades)
 
         def calculate_grades(event):
             console.log("Button clicked!")
@@ -100,7 +102,7 @@
                 if required_total_90 > 0:
                     required_midterm_and_final_90 = required_total_90 / (midterm_percent + final_percent)
                 else:
-                    required_midterm_and_final_90 = 0
+                    required_midterm _and_final_90 = 0
 
                 # Update the content of the result element
                 result_text = f"Your Prelim Grade is: {prelim_grade:.2f}<br>"
@@ -114,9 +116,6 @@
             except ValueError:
                 Element("result").element.innerHTML = "Invalid input. Please enter numbers only."
                 Element("result").element.style.display = "block"
-
-    # Attach event listener to the button
-    Element("calculateButton").listen("click", calculate_grades)
     </py-script>
 </body>
 </html>
