@@ -56,6 +56,14 @@
             background-color: #0097a7; /* Darker cyan on hover */
         }
 
+        .result-container {
+            padding: 20px;
+            border: 1px solid #444;
+            border-radius: 10px;
+            background-color: #444;
+            color: #fff;
+        }
+
         p {
             font-size: 18px;
             font-weight: bold;
@@ -73,7 +81,9 @@
         <input type="number" id="prelim_exam" placeholder="Prelim Exam" />
         <button id="calculateButton">Calculate Grades</button>
     </form>
-    <p id="result"></p>
+    <div class="result-container">
+        <p id="result"></p>
+    </div>
 
 <!-- PyScript code -->
 <py-script>
@@ -115,7 +125,7 @@
             attendance_weight = 0.10  # 10% weight for attendance
             prelim_exam_weight = 0.60  # 60% weight for prelim exam
             class_standing_weight = 0.30  # 30% weight for class standing
-            prelim_grade = round((attendance * attendance _weight) + (prelim_exam * prelim_exam_weight) + (overall_performance * class_standing_weight), 2)
+            prelim_grade = round((attendance * attendance_weight) + (prelim_exam * prelim_exam_weight) + (overall_performance * class_standing_weight), 2)
 
             # Calculate required grades for 75% and 90%
             passing_grade = 75
