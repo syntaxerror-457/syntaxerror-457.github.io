@@ -114,33 +114,33 @@
             class_standing_weight = 0.30  # 30% weight for class standing
             prelim_grade = round((attendance * attendance_weight) + (prelim_exam * prelim_exam_weight) + (overall_performance * class_standing_weight), 2)
 
-           # Calculate required grades for 75% and 90%
-	   passing_grade = 75
-	   deans_lister_grade = 90
-	   prelim_percent = 0.20
-	   midterm_percent = 0.30
-	   final_percent = 0.50
-	
-	   current_total = prelim_grade * prelim_percent
-	   required_total = passing_grade - current_total
-	   if required_total > 0:
-	       required_midterm_and_final = min(max(required_total / (midterm_percent + final_percent), 0), 100)
-	   else:
-	       required_midterm_and_final = 0
-	
-	   current_total_90 = prelim_grade * prelim_percent
-	   required_total_90 = deans_lister_grade - current_total_90
-	   if required_total_90 > 0:
-	       required_midterm_and_final_90 = min(max(required_total_90 / (midterm_percent + final_percent), 0), 100)
-	   else:
-	       required_midterm_and_final_90 = 0
-	
-	   # Update the content of the result element
-	   result_text = f"Your Prelim Grade is: {prelim_grade:.2f}\n"
-	   result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.\n"
-	   result_text += f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
-	
-	   Element("result").write(result_text)
+            # Calculate required grades for 75% and 90%
+            passing_grade = 75
+            deans_lister_grade = 90
+            prelim_percent = 0.20
+            midterm_percent = 0.30
+            final_percent = 0.50
+
+            current_total = prelim_grade * prelim_percent
+            required_total = passing_grade - current_total
+            if required_total > 0:
+                required_midterm_and_final = required_total / (midterm_percent + final_percent)
+            else:
+                required_midterm_and_final = 0
+
+            current_total_90 = prelim_grade * prelim_percent
+            required_total_90 = deans_lister_grade - current_total_90
+            if required_total_90 > 0:
+                required_midterm_and_final_90 = required_total_90 / (midterm_percent + final_percent)
+            else:
+                required_midterm_and_final_90 = 0
+
+            # Update the content of the result element
+            result_text = f"Your Prelim Grade is: {prelim_grade:.2f}\n"
+            result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.\n"
+            result_text += f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
+
+            Element("result").write(result_text)
 
             # Show the result section
             Element("result").element.style.display = "block"
