@@ -119,11 +119,14 @@
 
         # Show result section
         Element("result").element.style.display = "block"
-    except ValueError:
+            except ValueError:
         Element("result").element.innerHTML = "Invalid input. Please enter numbers only."
         Element("result").element.style.display = "block"
 
-# Attach event listener to the button
-Element("calculateButton").element.onclick = calculate_grades
+        # Attach event listener to the button
+        Element("calculateButton").element.onclick = calculate_grades
+
+        # Add this line to attach the event listener
+        Element("calculateButton").element.addEventListener("click", calculate_grades)
 </body>
 </html>
