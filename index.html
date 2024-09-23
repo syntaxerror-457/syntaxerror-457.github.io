@@ -64,6 +64,7 @@
     <!-- PyScript code -->
 <!-- PyScript code -->
 <!-- PyScript code -->
+<!-- PyScript code -->
 <py-script>
     from pyscript import Element
 
@@ -87,9 +88,10 @@
             overall_performance = performance_task * 0.3
 
             # Calculate final grade
-            attendance_weight = 0.10  # Assuming 10% weight for attendance
-            prelim_exam_weight = 0.20  # Assuming 20% weight for prelim exam
-            prelim_grade = round((attendance * attendance_weight) + overall_performance + (prelim_exam * prelim_exam_weight), 2)
+            attendance_weight = 0.10  # 10% weight for attendance
+            prelim_exam_weight = 0.60  # 60% weight for prelim exam
+            class_standing_weight = 0.30  # 30% weight for class standing
+            prelim_grade = round((attendance * attendance_weight) + (prelim_exam * prelim_exam_weight) + (overall_performance * class_standing_weight), 2)
 
             # Calculate required grades for 75% and 90%
             passing_grade = 75
