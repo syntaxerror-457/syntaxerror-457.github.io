@@ -103,7 +103,7 @@
                 return
 
             # Calculate performance task and overall performance
-            recitation_weight = 0.30  # 30% weight for recitation
+            recitation_weight = 0.30 # 30% weight for recitation
             quiz_weight = 0.40  # 40% weight for quiz
             requirements_weight = 0.30  # 30% weight for requirements
             overall_performance = round(( recitation * recitation_weight) + (quiz * quiz_weight) + (requirements * requirements_weight), 2)
@@ -136,11 +136,18 @@
                 required_midterm_and_final_90 = 0
 
             # Update the content of the result element
-            result_text = f"Your Prelim Grade is: {prelim_grade:.2f}\n"
-            result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.\n"
-            result_text += f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
+            Element("result").element.innerHTML = ""
+            result_p = Element("p")
+            result_p.element.innerHTML = f"Your Prelim Grade is: {prelim_grade:.2f}"
+            Element("result").element.appendChild(result_p)
 
-            Element("result").write(result_text)
+            result_p = Element("p")
+            result_p.element.innerHTML = f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}."
+            Element("result").element.appendChild(result_p)
+
+            result_p = Element("p")
+            result_p.element.innerHTML = f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
+            Element("result").element.appendChild(result_p)
 
             # Show the result section
             Element("result").element.style.display = "block"
@@ -154,3 +161,4 @@
 </py-script>
 </body>
 </html>
+		    
