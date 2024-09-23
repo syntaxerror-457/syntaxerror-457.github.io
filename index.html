@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grade Calculator</title>
-    <!-- Include PyScript -->
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <style>
-        body {
+                body {
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
@@ -51,8 +49,6 @@
     </style>
 </head>
 <body>
-    <!-- HTML elements for user input -->
-	
     <input type="number" id="attendance" placeholder="Absences" />
     <input type="number" id="recitation" placeholder="Recitation" />
     <input type="number" id="quiz" placeholder="Quiz" />
@@ -62,35 +58,36 @@
     <button id="populateButton">Generate Sample</button>
     <p id="result"></p>
 
-<py-script>
-    from pyscript import Element
+    <py-script>
+        from pyscript import Element
 
-    def calculate_grades():
-        try:
-            # Get values from inputs (corrected access method)
-            attendance = float(Element("attendance").value) * 0.2
-            prelim_exam = float(Element("prelim_exam").value) * 0.2
-            recitation = float(Element("recitation").value) * 0.1
-            quiz = float(Element("quiz").value) * 0.1
-            requirements = float(Element("requirements").value) * 0.1
+        def calculate_grades():
+            try:
+                attendance = float(Element("attendance").value) * 0.2
+                prelim_exam = float(Element("prelim_exam").value) * 0.2
+                recitation = float(Element("recitation").value) * 0.1
+                quiz = float(Element("quiz").value) * 0.1
+                requirements = float(Element("requirements").value) * 0.1
 
-            # ... (rest of your calculation logic) ...
+                # ... (Your calculation logic to calculate 'total_grade') ...
 
-        except ValueError:
-            Element("result").write("Invalid input. Please enter numbers only.")
-            Element("result").element.style.display = "block"
+                Element("result").write(f"Your grade is: {total_grade:.2f}")
+                Element("result").element.style.display = "block"
 
-    def populate_inputs():
-        # Set predefined values (corrected access method)
-        Element("attendance").value = 90
-        Element("recitation").value = 100
-        Element("quiz").value = 95
-        Element("requirements").value = 90
-        Element("prelim_exam").value = 80
+            except ValueError:
+                Element("result").write("Invalid input. Please enter numbers only.")
+                Element("result").element.style.display = "block"
 
-    # Attach event listeners to the buttons
-    Element("calculateButton").on("click", calculate_grades)
-    Element("populateButton").on("click", populate_inputs)
-</py-script>
+        def populate_inputs():
+            Element("attendance").value = 90
+            Element("recitation").value = 100
+            Element("quiz").value = 95
+            Element("requirements").value = 90
+            Element("prelim_exam").value = 80
+
+        # Correct Event Listener Attachment
+        Element("calculateButton").on("click", calculate_grades)
+        Element("populateButton").on("click", populate_inputs)
+    </py-script>
 </body>
 </html>
