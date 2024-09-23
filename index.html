@@ -16,20 +16,7 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #333; /* Dark mode background */
-            color: #fff; /* Dark mode text color */
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            border: 1px solid #444;
-            border-radius: 10px;
-            background-color: #444;
-            color: #fff;
+            background-color: #f0f0f0;
         }
 
         input {
@@ -56,14 +43,6 @@
             background-color: #0097a7; /* Darker cyan on hover */
         }
 
-        .result-container {
-            padding: 20px;
-            border: 1px solid #444;
-            border-radius: 10px;
-            background-color: #444;
-            color: #fff;
-        }
-
         p {
             font-size: 18px;
             font-weight: bold;
@@ -73,17 +52,14 @@
 </head>
 <body>
     <!-- HTML elements for user input -->
-    <form>
-        <input type="number" id="attendance" placeholder="Absences" />
-        <input type="number" id="recitation" placeholder="Recitation" />
-        <input type="number" id="quiz" placeholder="Quiz" />
-        <input type="number" id="requirements" placeholder="Requirements" />
-        <input type="number" id="prelim_exam" placeholder="Prelim Exam" />
-        <button id="calculateButton">Calculate Grades</button>
-    </form>
-    <div class="result-container">
-        <p id="result"></p>
-    </div>
+	
+    <input type="number" id="attendance" placeholder="Absences" />
+    <input type="number" id="recitation" placeholder="Recitation" />
+    <input type="number" id="quiz" placeholder="Quiz" />
+    <input type="number" id="requirements" placeholder="Requirements" />
+    <input type="number" id="prelim_exam" placeholder="Prelim Exam" />
+    <button id="calculateButton">Calculate Grades</button>
+    <p id="result"></p>
 
 <!-- PyScript code -->
 <py-script>
@@ -153,7 +129,6 @@
             result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.\n"
             result_text += f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
 
-            Element("result").element.style.color = "black"
             Element("result").write(result_text)
 
             # Show the result section
