@@ -46,15 +46,11 @@
             background-color: #0097a7;
         }
 
-        #result {
+        p {
             font-size: 18px;
             font-weight: bold;
             display: none; 
             color: #e0e0e0;
-        }
-
-        .result-line {
-            margin-bottom: 8px; /* Add spacing between lines */
         }
 	h1 {
             color: #d6d6d6;
@@ -74,11 +70,7 @@
     <input type="number" id="requirements" placeholder="Requirements" />
     <input type="number" id="prelim_exam" placeholder="Prelim Exam" />
     <button id="calculateButton">Calculate Grades</button>
-    <div id="result">
-        <p class="result-line"></p>
-        <p class="result-line"></p>
-        <p class="result-line"></p>
-    </div>
+    <p id="result"></p>
 
 <!-- PyScript code -->
 <py-script>
@@ -95,18 +87,19 @@
 
             # Check if values are within the range of 0 to 100
             if not (0 <= absences <= 100 and 0 <= recitation <= 100 and 0 <= quiz <= 100 and 0 <= requirements <= 100 and 0 <= prelim_exam <= 100):
+                Element("result").write("Error: You Can Only Enter Numbers Between 0 and 100.")
                 Element("result").element.style.display = "block"
-                Element("result").children[0].textContent = "Error: You Can Only Enter Numbers Between 0 and 100."
-                Element("result").children[0].style.color = "red"
+                Element("result").element.style.color = "red"  
                 return
 
             # Calculate attendance
             attendance = 100 - (absences * 10)
 
             # Check if absences are 4 or more
-            if absences >= 4: Element("result").element.style.display = "block"
-                Element("result").children[0].textContent = "You Failed Due to the Amount of Absences"
-                Element("result").children[0].style.color = "red"
+            if absences >= 4:
+                Element("result").write("You Failed Due to the Amount of Absences")
+                Element("result").element.style.display = "block"
+                Element("result").element.style.color = "red"
                 return
 
             # Calculate performance task and overall performance
@@ -143,15 +136,18 @@
                 required_midterm_and_final_90 = 0
 
             # Update the content of the result element
-            Element("result").element.style.display = "block"
-            Element("result").children[0].textContent = f"Your Prelim Grade is: {prelim_grade:.2f}"
-            Element("result").children[1].textContent = f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}."
-            Element("result").children[2].textContent = f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
+            result_text = f"Your Prelim Grade is: {prelim_grade:.2f}\n"
+            result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.\n"
+            result_text += f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
 
-        except ValueError:
+            Element("result").write(result_text)
+
+            # Show the result section
             Element("result").element.style.display = "block"
-            Element("result").children[0].textContent = "Invalid input. Please enter numbers only."
-            Element("result").children[0].style.color = "red"  
+        except ValueError:
+            Element("result").write("Invalid input. Please enter numbers only.")
+            Element("result").element.style.display = "block"
+            Element("result").element.style.color = "red"  
 
     # Attach event listener to the button
     Element("calculateButton").element.onclick = calculate_grades
