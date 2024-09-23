@@ -48,6 +48,10 @@
             font-weight: bold;
             display: none; /* Hide result initially */
         }
+
+        .error {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -61,6 +65,7 @@
     <button id="calculateButton">Calculate Grades</button>
     <button id="populateButton">Generate Sample</button>
     <p id="result"></p>
+    <p id="error" class="error"></p>
 
     <!-- PyScript code -->
     <py-script>
@@ -69,39 +74,47 @@
         def calculate_grades(event):
             try:
                 # Get values from inputs
-                attendance = float(Element("attendance").element.value) * 0.1
-                recitation = float(Element("recitation").element.value) * 0.4
-                quiz = float(Element("quiz").element.value) * 0.3
-                requirements = float(Element("requirements").element.value) * 0.3
-                prelim_exam = float(Element("prelim_exam").element.value) * 0.6
+                attendance = float(Element("attendance").element.value)
+                recitation = float(Element("recitation").element.value)
+                quiz = float(Element("quiz").element.value)
+                requirements = float(Element("requirements").element.value)
+                prelim_exam = float(Element("prelim_exam").element.value)
+
+                # Validate input ranges
+                if attendance < 0 or attendance > 4:
+                    Element("error").element.innerHTML = "Grades should be between 0 and 100. Absences should be 0 or greater."
+                    Element("error").element.style.display = "block"
+                    return
+                if recitation < 0 or recitation > 100:
+                    Element("error").element.innerHTML = "Grades should be between 0 and 100. Absences should be 0 or greater."
+                    Element("error").element.style.display = "block"
+                    return
+                if quiz < 0 or quiz > 100:
+                    Element("error").element.innerHTML = "Grades should be between 0 and 100. Absences should be 0 or greater."
+                    Element("error").element.style.display = "block"
+                    return
+                if requirements < 0 or requirements > 100:
+                    Element("error").element.innerHTML = "Grades should be between 0 and 100. Absences should be 0 or greater."
+                    Element("error").element.style.display = "block"
+                    return
+                if prelim_exam < 0 or prelim_exam > 100:
+                    Element("error").element.innerHTML = "Grades should be between 0 and 100. Absences should be 0 or greater."
+                    Element("error").element.style.display = "block"
+                    return
 
                 # Calculate performance task and overall performance
-                performance_task = recitation + quiz + requirements
+                performance_task = recitation * 0.4 + quiz * 0.3 + requirements * 0.3
                 overall_performance = performance_task * 0.3
 
                 # Calculate final grade
-                prelim_grade = round(attendance + overall_performance + prelim_exam, 2)
+                prelim_grade = round(attendance * 0.1 + overall_performance + prelim_exam * 0.6, 2)
 
                 # Update the content of the result element
-                Element("result").write(f"Your Prelim Grade is: {prelim_grade:.2f}")
+		Element("result").write(f"Your Prelim Grade is: {prelim_grade:.2f}")
 
-                # Show the result section
-                Element("result").element.style.display = "block"
-            except ValueError:
-                Element("result").write("Invalid input. Please enter numbers only.")
-                Element("result").element.style.display = "block"
-
-        def populate_inputs(event):
-            # Set predefined values
-            Element("attendance").element.value = 90
-            Element("recitation").element.value = 100
-            Element("quiz").element.value = 95
-            Element("requirements").element.value = 90
-            Element("prelim_exam").element.value = 80
-
-        # Attach event listeners to the buttons
-        Element("calculateButton").element.onclick = calculate_grades
-        Element("populateButton").element.onclick = populate_inputs
+		# Show the result section
+		Element("result").element.style.display = "block"
+               
     </py-script>
 </body>
 </html>
