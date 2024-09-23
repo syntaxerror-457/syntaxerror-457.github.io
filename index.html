@@ -82,23 +82,23 @@
 
                 # Validate input ranges
                 if attendance < 0 or attendance > 4:
-                    Element("error").write("Grades should be between 0 and 100. Absences should be 0 or greater.")
+                    Element("error").element.innerHTML = "Grades should be between 0 and 100. Absences should be 0 or greater."
                     Element("error").element.style.display = "block"
                     return
                 if recitation < 0 or recitation > 100:
-                    Element("error").write("Grades should be between 0 and 100. Absences should be 0 or greater.")
+                    Element("error").element.innerHTML = "Grades should be between 0 and 100. Absences should be 0 or greater."
                     Element("error").element.style.display = "block"
                     return
                 if quiz < 0 or quiz > 100:
-                    Element("error").write("Grades should be between 0 and 100. Absences should be 0 or greater.")
+                    Element("error").element.innerHTML = "Grades should be between 0 and 100. Absences should be 0 or greater."
                     Element("error").element.style.display = "block"
                     return
                 if requirements < 0 or requirements > 100:
-                    Element("error").write("Grades should be between 0 and 100. Absences should be 0 or greater.")
+                    Element("error").element.innerHTML = "Grades should be between 0 and 100. Absences should be 0 or greater."
                     Element("error").element.style.display = "block"
                     return
                 if prelim_exam < 0 or prelim_exam > 100:
-                    Element("error").write("Grades should be between 0 and 100. Absences should be 0 or greater.")
+                    Element("error").element.innerHTML = "Grades should be between 0 and 100. Absences should be 0 or greater."
                     Element("error").element.style.display = "block"
                     return
 
@@ -107,11 +107,7 @@
                 overall_performance = performance_task * 0.3
 
                 # Calculate final grade
-                prelim_grade = round(attendance * 0.1 + overall_performance + prelim_exam * 0.6, 2)
-
-                # Update the content of the result element
-                Element("result").write(f"Your Prelim Grade is: {prelim_grade:.2f}")
-
-                # Show the result section
-                Element("result").element.style.display = "block"
-                Element
+                prelim_grade = round(attendance * 0.1
+    </py-script>
+</body>
+</html>
