@@ -84,6 +84,13 @@
             # Calculate attendance
             attendance = 100 - (absences * 10)
 
+            # Check if absences are 4 or more
+            if absences >= 4:
+                Element("result").write("You Failed Due to the Amount of Absences")
+                Element("result").element.style.display = "block"
+                Element("result").element.style.color = "red"
+                return
+
             # Calculate performance task and overall performance
             recitation_weight = 0.30  # 30% weight for recitation
             quiz_weight = 0.40  # 40% weight for quiz
