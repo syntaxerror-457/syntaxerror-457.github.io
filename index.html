@@ -88,56 +88,56 @@
         </div>
     </div>
 
-<py-script>
-    from pyscript import Element
+    <script>
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            try {
+                var absences = parseFloat(document.getElementById('absences').value);
+                var recitation = parseFloat(document.getElementById('recitation').value) * 0.4;
+                var quiz = parseFloat(document.getElementById('quiz').value) * 0.3;
+                var requirements = parseFloat(document.getElementById('requirements').value) * 0.3;
+                var prelim_exam = parseFloat(document.getElementById('prelim_exam').value) * 0.6;
 
-    def reset_result():
-        """Function to reset the result display and error message."""
-        Element("result").element.style.display = "none"  # Hide the result section
-        Element("finalGrade").element.innerHTML = ""
-        Element("attendanceMessage").element.innerHTML = ""
+                // Validate input ranges
+                if (recitation < 0 || recitation > 100) throw new Error("Recitation grade must be between 0 and 100.");
+                if (quiz < 0 || quiz > 100) throw new Error("Quiz grade must be between 0 and 100.");
+                if (requirements < 0 || requirements > 100) throw new Error("Requirements grade must be between 0 and 100.");
+                if (prelim_exam < 0 || prelim_exam > 100) throw new Error("Prelim exam grade must be between 0 and 100.");
 
-    def calculate_grade(event):
-        event.preventDefault()  # Prevent the form from refreshing the page
-        reset_result()  # Reset any previous result when recalculating
-        try:
-            absences = float(Element("absences").element.value)
-            recitation = float(Element("recitation").element.value) * 0.4
-            quiz = float(Element("quiz").element.value) * 0.3
-            requirements = float(Element("requirements").element.value) * 0.3
-            prelim_exam = float(Element("prelim_exam").element.value) * 0.6
-        except ValueError:
-            Element("attendanceMessage").element.innerHTML = "Please enter valid grades."
-            return
+                var attendance_percentage = (100 - absences);  // Assuming 100 total classes
+                var attendance_message;
+                var final_grade_message;
+                var final_grade_color;
 
-        # Validate input ranges
-        if recitation > 40 or quiz > 30 or requirements > 30 or prelim_exam > 60:
-            Element("attendanceMessage").element.innerHTML = "All grades must be between 0 and their respective maximum values."
-            return
+                if (absences >= 4) {
+                    final_grade_message = "FAILED";
+                    final_grade_color = "red";
+                    attendance_message = "Failed due to excessive absences.";
+                } else if (attendance_percentage < 90) {
+                    attendance_message = "Attendance is below the required 90%.";
+                } else {
+                    attendance_message = "Attendance is satisfactory.";
+                    var performance_task = recitation + quiz + requirements;
+                    var overall_performance = performance_task * 0.3;
+                    var final_grade = Math.round(attendance_percentage * 0.1 + overall_performance + prelim_exam, 2);
+                    final_grade_message = final_grade;
+                    final_grade_color = "inherit";  // Default color
+                }
 
-        attendance_percentage = (100 - absences)  # Assuming 100 total classes
-        attendance_message = ""
-        final_grade_message = ""
-        final_grade_color = ""
+                document.getElementById('finalGrade').innerHTML = <span style='color: ${final_grade_color};'>${final_grade_message}</span>;
+                document.getElementById('attendanceMessage').textContent = attendance_message;
+                document.getElementById('result').style.display = 'block';
 
-        if absences >= 4:
-            final_grade_message = "FAILED"
-            final_grade_color = "red"
-            attendance_message = "Failed due to excessive absences."
-        else:
-            final_grade_message = "PASSED"
-            final_grade_color = "green"
+            } catch (e) {
+                document.getElementById('result').textContent = Invalid input. Please enter numbers only. Error: ${e.message};
+            }
+        });
 
-        # Calculate the final grade
-        final_grade = (recitation + quiz + requirements + prelim_exam)
-
-        # Update result display
-        Element("finalGrade").element.innerHTML = f"<span style='color: {final_grade_color};'>{final_grade_message} ({final_grade:.2f})</span>"
-        Element("attendanceMessage").element.innerHTML = attendance_message
-        # Show result section
-        Element("result").element.style.display = "block"
-
-    Element("calculateBtn").element.onclick = calculate_grade
-</py-script>
+        document.getElementById('randomizeBtn').addEventListener('click', function() {
+            document.getElementById('recitation').value = (Math.random() * 100).toFixed(2);
+            document.getElementById('quiz').value = (Math.random() * 100).toFixed(2);
+            document.getElementById('requirements').value = (Math.random() * 100).toFixed(2);
+            document.getElementById('prelim_exam').value = (Math.random() * 100).toFixed(2);
+        });
+    </script>
 </body>
 </html>
