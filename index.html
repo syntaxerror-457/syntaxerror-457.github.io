@@ -88,46 +88,54 @@
         </div>
     </div>
 
-    <py-script>
-        from pyscript import Element
+<py-script>
+    from pyscript import Element
 
-        def calculate_grade():
-            try:
-                absences = float(Element("absences").element.value)
-                recitation = float(Element("recitation").element.value) * 0.4
-                quiz = float(Element("quiz").element.value) * 0.3
-                requirements = float(Element("requirements").element.value) * 0.3
-                prelim_exam = float(Element("prelim_exam").element.value) * 0.6
+    def reset_result():
+        """Function to reset the result display and error message."""
+        Element("result").element.style.display = "none"  # Hide the result section
+        Element("error").element.innerHTML = ""  # Clear error message
+        Element("finalGrade").element.innerHTML = ""
+        Element("attendanceMessage").element.innerHTML = ""
 
-                # Validate input ranges
-                if recitation > 100 or quiz > 100 or requirements > 100 or prelim_exam > 100:
-                    Element("result").element.innerHTML = "All grades must be between 0 and 100."
-                    return
+    def calculate_grade(event):
+        event.preventDefault()  # Prevent the form from refreshing the page
+        reset_result()  # Reset any previous result when recalculating
+        try:
+            absences = float(Element("absences").element.value)
+            recitation = float(Element("recitation").element.value) * 0.4
+            quiz = float(Element("quiz").element.value) * 0.3
+            requirements = float(Element("requirements").element.value) * 0.3
+            prelim_exam = float(Element("prelim_exam").element.value) * 0.6
+        except ValueError:
+            Element("error").element.innerHTML = "Please enter valid grades."
+            return
 
-                attendance_percentage = (100 - absences)  # Assuming 100 total classes
-                attendance_message = ""
-                final_grade_message = ""
-                final_grade_color = ""
+        # Validate input ranges
+        if recitation > 100 or quiz > 100 or requirements > 100 or prelim_exam > 100:
+            Element("error").element.innerHTML = "All grades must be between 0 and 100."
+            return
 
-                if absences >= 4:
-                    final_grade_message = "FAILED"
-                    final_grade_color = "red"
+        attendance_percentage = (100 - absences)  # Assuming 100 total classes
+        attendance_message = ""
+        final_grade_message = ""
+        final_grade_color = ""
 
-                document.getElementById('finalGrade').innerHTML = <span style='color: ${final_grade_color};'>${final_grade_message}</span>;
-                document.getElementById('attendanceMessage').textContent = attendance_message;
-                document.getElementById('result').style.display = 'block';
+        if absences >= 4:
+            final_grade_message = "FAILED"
+            final_grade_color = "red"
+            attendance_message = "Failed due to excessive absences."
+        else:
+            final_grade_message = "PASSED"
+            final_grade_color = "green"
 
-            } catch (e) {
-                document.getElementById('result').textContent = Invalid input. Please enter numbers only. Error: ${e.message};
-            }
-        });
+        # Update result display
+        Element("finalGrade").element.innerHTML = f"<span style='color: {final_grade_color};'>{final_grade_message}</span>"
+        Element("attendanceMessage").element.innerHTML = attendance_message
+        # Show result section
+        Element("result").element.style.display = "block"
 
-        document.getElementById('randomizeBtn').addEventListener('click', function() {
-            document.getElementById('recitation').value = (Math.random() * 100).toFixed(2);
-            document.getElementById('quiz').value = (Math.random() * 100).toFixed(2);
-            document.getElementById('requirements').value = (Math.random() * 100).toFixed(2);
-            document.getElementById('prelim_exam').value = (Math.random() * 100).toFixed(2);
-        });
-    </py-script>
+    Element("calculateBtn").element.onclick = calculate_grade
+</py-script>
 </body>
 </html>
