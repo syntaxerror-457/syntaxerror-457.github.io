@@ -16,18 +16,18 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #333; /* Dark mode background */
-            color: #fff; /* Dark mode text color */
+            background-color: #212121; 
+            color: #e0e0e0; 
         }
 
         input {
             margin: 8px;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #424242; 
             border-radius: 4px;
             width: 200px;
-            background-color: #444; /* Dark mode input background */
-            color: #fff; /* Dark mode input text color */
+            background-color: #333;
+            color: #e0e0e0;
         }
 
         button {
@@ -35,7 +35,7 @@
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
-            background-color: #00bcd4; /* Cyan color */
+            background-color: #00bcd4; 
             color: white;
             font-size: 16px;
             cursor: pointer;
@@ -43,14 +43,14 @@
         }
 
         button:hover {
-            background-color: #0097a7; /* Darker cyan on hover */
+            background-color: #0097a7;
         }
 
         p {
             font-size: 18px;
             font-weight: bold;
-            display: none; /* Hide result initially */
-            color: #fff; /* Dark mode result text color */
+            display: none; 
+            color: #e0e0e0;
         }
     </style>
 </head>
@@ -82,7 +82,7 @@
             if not (0 <= absences <= 100 and 0 <= recitation <= 100 and 0 <= quiz <= 100 and 0 <= requirements <= 100 and 0 <= prelim_exam <= 100):
                 Element("result").write("Error: You Can Only Enter Numbers Between 0 and 100.")
                 Element("result").element.style.display = "block"
-                Element("result").element.style.color = "red"  # Add this line to make the error message red
+                Element("result").element.style.color = "red"  
                 return
 
             # Calculate attendance
@@ -99,7 +99,7 @@
             recitation_weight = 0.30  # 30% weight for recitation
             quiz_weight = 0.40  # 40% weight for quiz
             requirements_weight = 0.30  # 30% weight for requirements
-            overall_performance = round((recitation * recitation_weight) + (quiz * quiz_weight) + (requirements * requirements_weight), 2)
+            overall_performance = round(( recitation * recitation_weight) + (quiz * quiz_weight) + (requirements * requirements_weight), 2)
 
             # Calculate final grade
             attendance_weight = 0.10  # 10% weight for attendance
@@ -140,7 +140,7 @@
         except ValueError:
             Element("result").write("Invalid input. Please enter numbers only.")
             Element("result").element.style.display = "block"
-            Element("result").element.style.color = "red"  # Add this line to make the error message red
+            Element("result").element.style.color = "red"  
 
     # Attach event listener to the button
     Element("calculateButton").element.onclick = calculate_grades
