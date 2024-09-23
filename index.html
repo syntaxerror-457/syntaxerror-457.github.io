@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grade Calculator</title>
+    <!-- Include PyScript -->
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <style>
@@ -49,7 +51,9 @@
     </style>
 </head>
 <body>
-    <input type="number" id="attendance" placeholder="Absences" />
+    <!-- HTML elements for user input -->
+	
+    <input type="number" id="attendance" placeholder="Attendance" />
     <input type="number" id="recitation" placeholder="Recitation" />
     <input type="number" id="quiz" placeholder="Quiz" />
     <input type="number" id="requirements" placeholder="Requirements" />
@@ -58,49 +62,46 @@
     <button id="populateButton">Generate Sample</button>
     <p id="result"></p>
 
+    <!-- PyScript code -->
     <py-script>
         from pyscript import Element
 
-        def calculate_grades():
+        def calculate_grades(event):
             try:
-                attendance = float(Element("attendance").value) * 0.2
-                prelim_exam = float(Element("prelim_exam").value) * 0.2
-                recitation = float(Element("recitation").value) * 0.1
-                quiz = float(Element("quiz").value) * 0.1
-                requirements = float(Element("requirements").value) * 0.1
+                # Get values from inputs
+                attendance = float(Element("attendance").element.value) * 0.1
+                recitation = float(Element("recitation").element.value) * 0.4
+                quiz = float(Element("quiz").element.value) * 0.3
+                requirements = float(Element("requirements").element.value) * 0.3
+                prelim_exam = float(Element("prelim_exam").element.value) * 0.6
 
-                overall_performance = attendance + prelim_exam + recitation + quiz + requirements
+                # Calculate performance task and overall performance
+                performance_task = recitation + quiz + requirements
+                overall_performance = performance_task * 0.3
 
-                required_midterm_75 = (0.75 - overall_performance) * 0.3 / 0.3
-                required_final_75 = (0.75 - overall_performance - required_midterm_75 * 0.3) / 0.5
+                # Calculate final grade
+                prelim_grade = round(attendance + overall_performance + prelim_exam, 2)
 
-                required_midterm_90 = (0.90 - overall_performance) * 0.3 / 0.3
-                required_final_90 = (0.90 - overall_performance - required_midterm_90 * 0.3) / 0.5
+                # Update the content of the result element
+                Element("result").write(f"Your Prelim Grade is: {prelim_grade:.2f}")
 
-                result_text = f"Your Overall Performance is: {overall_performance:.2f}\n"
-                result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_75:.2f} and a Final grade of {required_final_75:.2f}.\n"
-                result_text += f"To achieve 90%, you need a Midterm grade of {required_midterm_90:.2f} and a Final grade of {required_final_90:.2f}."
-
-                Element("result").element.innerHTML = result_text
+                # Show the result section
                 Element("result").element.style.display = "block"
-
             except ValueError:
-                Element("result").element.innerHTML = "Invalid input. Please enter numbers only."
+                Element("result").write("Invalid input. Please enter numbers only.")
                 Element("result").element.style.display = "block"
 
-        def populate_inputs():
-            Element("attendance").value = 90
-            Element("recitation").value = 100
-            Element("quiz").value = 95
-            Element("requirements").value = 90
-            Element("prelim_exam").value = 80
+        def populate_inputs(event):
+            # Set predefined values
+            Element("attendance").element.value = 90
+            Element("recitation").element.value = 100
+            Element("quiz").element.value = 95
+            Element("requirements").element.value = 90
+            Element("prelim_exam").element.value = 80
 
-        # Correct Event Listener Attachment
-        calculate_button = Element("calculateButton").element
-        calculate_button.addEventListener("click", calculate_grades)
-
-        populate_button = Element("populateButton").element
-        populate_button.addEventListener("click", populate_inputs)  # Attach to the correct function
+        # Attach event listeners to the buttons
+        Element("calculateButton").element.onclick = calculate_grades
+        Element("populateButton").element.onclick = populate_inputs
     </py-script>
 </body>
 </html>
