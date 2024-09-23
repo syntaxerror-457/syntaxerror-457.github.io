@@ -61,10 +61,6 @@
     <button id="calculateButton">Calculate Grades</button>
     <p id="result"></p>
 
-    <!-- PyScript code -->
-<!-- PyScript code -->
-<!-- PyScript code -->
-<!-- PyScript code -->
 <!-- PyScript code -->
 <py-script>
     from pyscript import Element
@@ -82,6 +78,7 @@
             if not (0 <= attendance <= 100 and 0 <= recitation <= 100 and 0 <= quiz <= 100 and 0 <= requirements <= 100 and 0 <= prelim_exam <= 100):
                 Element("result").write("Error: You can only enter numbers between 0 and 100.")
                 Element("result").element.style.display = "block"
+                Element("result").element.style.color = "red"  # Add this line to make the error message red
                 return
 
             # Calculate performance task and overall performance
@@ -129,6 +126,7 @@
         except ValueError:
             Element("result").write("Invalid input. Please enter numbers only.")
             Element("result").element.style.display = "block"
+            Element("result").element.style.color = "red"  # Add this line to make the error message red
 
     # Attach event listener to the button
     Element("calculateButton").element.onclick = calculate_grades
