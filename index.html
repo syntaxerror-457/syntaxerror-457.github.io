@@ -115,8 +115,8 @@
                 Element("result").write("Invalid input. Please enter numbers only.")
                 Element("result").element.style.display = "block"
 
-        # Attach event listener to the button
-        Element("calculateButton").element.onclick = calculate_grades
+	        # Attach event listener to the button
+   		Element("calculateButton").listen("click", calculate_grades)
     </py-script>
 </body>
 </html>
