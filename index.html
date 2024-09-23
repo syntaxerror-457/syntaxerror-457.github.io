@@ -59,7 +59,6 @@
     <input type="number" id="requirements" placeholder="Requirements" />
     <input type="number" id="prelim_exam" placeholder="Prelim Exam" />
     <button id="calculateButton">Calculate Grades</button>
-    <button id="populateButton">Generate Sample</button>
     <p id="result"></p>
 
     <!-- PyScript code -->
@@ -91,17 +90,8 @@
                 Element("result").write("Invalid input. Please enter numbers only.")
                 Element("result").element.style.display = "block"
 
-        def populate_inputs(event):
-            # Set predefined values
-            Element("attendance").element.value = 90
-            Element("recitation").element.value = 100
-            Element("quiz").element.value = 95
-            Element("requirements").element.value = 90
-            Element("prelim_exam").element.value = 80
-
-        # Attach event listeners to the buttons
+        # Attach event listener to the button
         Element("calculateButton").element.onclick = calculate_grades
-        Element("populateButton").element.onclick = populate_inputs
     </py-script>
 </body>
 </html>
