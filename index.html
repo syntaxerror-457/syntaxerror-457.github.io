@@ -98,10 +98,9 @@
                 var prelim_exam = parseFloat(document.getElementById('prelim_exam').value) * 0.6;
 
                 // Validate input ranges
-                if (recitation < 0 || recitation > 100) throw new Error("Recitation grade must be between 0 and 100.");
-                if (quiz < 0 || quiz > 100) throw new Error("Quiz grade must be between 0 and 100.");
-                if (requirements < 0 || requirements > 100) throw new Error("Requirements grade must be between 0 and 100.");
-                if (prelim_exam < 0 || prelim_exam > 100) throw new Error("Prelim exam grade must be between 0 and 100.");
+                if (recitation > 100 || quiz > 100 || requirements > 100 || prelim_exam > 100) {
+                    throw new Error("All grades must be between 0 and 100.");
+                }
 
                 var attendance_percentage = (100 - absences);  // Assuming 100 total classes
                 var attendance_message;
@@ -112,16 +111,6 @@
                     final_grade_message = "FAILED";
                     final_grade_color = "red";
                     attendance_message = "Failed due to excessive absences.";
-                } else if (attendance_percentage < 90) {
-                    attendance_message = "Attendance is below the required 90%.";
-                } else {
-                    attendance_message = "Attendance is satisfactory.";
-                    var performance_task = recitation + quiz + requirements;
-                    var overall_performance = performance_task * 0.3;
-                    var final_grade = Math.round(attendance_percentage * 0.1 + overall_performance + prelim_exam, 2);
-                    final_grade_message = final_grade;
-                    final_grade_color = "inherit";  // Default color
-                }
 
                 document.getElementById('finalGrade').innerHTML = <span style='color: ${final_grade_color};'>${final_grade_message}</span>;
                 document.getElementById('attendanceMessage').textContent = attendance_message;
