@@ -62,7 +62,6 @@
     <p id="result"></p>
 
 <!-- PyScript code -->
-<!-- PyScript code -->
 <py-script>
     from pyscript import Element
 
@@ -130,7 +129,6 @@
             result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.\n"
             result_text += f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
 
-            Element("result").element.style.color = "black"
             Element("result").write(result_text)
 
             # Show the result section
@@ -138,7 +136,10 @@
         except ValueError:
             Element("result").write("Invalid input. Please enter numbers only.")
             Element("result").element.style.display = "block"
-            Element("result").element.style.color = "red"  # Add this
+            Element("result").element.style.color = "red"  # Add this line to make the error message red
+
+    # Attach event listener to the button
+    Element("calculateButton").element.onclick = calculate_grades
 </py-script>
 </body>
 </html>
