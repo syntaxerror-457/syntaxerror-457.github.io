@@ -67,12 +67,18 @@
 
         def calculate_grades(event):
             try:
-                # Get values from inputs
-                attendance = float(Element("attendance").element.value) * 0.1
-                recitation = float(Element("recitation").element.value) * 0.4
-                quiz = float(Element("quiz").element.value) * 0.3
-                requirements = float(Element("requirements").element.value) * 0.3
-                prelim_exam = float(Element("prelim_exam").element.value) * 0.6
+           	# Get values from inputs
+            	attendance = float(Element("attendance").element.value)
+            	recitation = float(Element("recitation").element.value)
+            	quiz = float(Element("quiz").element.value)
+            	requirements = float(Element("requirements").element.value)
+            	prelim_exam = float(Element("prelim_exam").element.value)
+
+                # Check if values are within the range of 0 to 100
+                if not (0 <= attendance <= 100 and 0 <= recitation <= 100 and 0 <= quiz <= 100 and 0 <= requirements <= 100 and 0 <= prelim_exam <= 100):
+                Element("result").write("Error: You can only enter numbers between 0 and 100.")
+                Element("result").element.style.display = "block"
+                return
 
                 # Calculate performance task and overall performance
                 performance_task = recitation + quiz + requirements
