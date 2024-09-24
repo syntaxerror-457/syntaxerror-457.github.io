@@ -79,9 +79,9 @@
 
     <div id="result" style="display: none;">
         <h2>Result:</h2>
-        <p id="prelimGrade"></p>
-        <p id="passingGrade"></p>
-        <p id="deansListerGrade"></p>
+        <p>Prelim Grade: <span id="prelimGrade"></span></p>
+        <p>To pass with 75%, you need a Midterm grade of <span id="midtermGrade75"></span> and a Final grade of <span id="midtermGrade75"></span>.</p>
+        <p>To achieve 90%, you need a Midterm grade of <span id="midtermGrade90"></span> and a Final grade of <span id="midtermGrade90"></span>.</p>
     </div>
 
     <p id="error" style="color: red;"></p>
@@ -94,8 +94,10 @@
             Element("result").element.style.display = "none"  # Hide the result section
             Element("error").element.innerHTML = ""  # Clear error message
             Element("prelimGrade").element.innerHTML = ""
-            Element("passingGrade").element.innerHTML = ""
-            Element("deansListerGrade").element.innerHTML = ""
+            Element("midtermGrade75").element.innerHTML = ""
+            Element("finalGrade75").element.innerHTML = ""
+            Element("midtermGrade90").element.innerHTML = ""
+            Element("finalGrade90").element.innerHTML = ""
 
         def calculate_grade(event):
             event.preventDefault()  # Prevent the form from refreshing the page
@@ -118,7 +120,8 @@
             # Calculate attendance
             attendance = 100 - (absences * 10)
 
-            # Check if absences are 4 or more if absences >= 4:
+            # Check if absences are 4 or more
+            if absences >= 4:
                 Element("error").element.innerHTML = "You Failed Due to the Amount of Absences"
                 return
 
@@ -156,9 +159,11 @@
                 required_midterm_and_final_90 = 0
 
             # Update result display
-            Element("prelimGrade").element.innerHTML = f"Prelim Grade: {prelim_grade:.2f}%"
-            Element("passingGrade").element.innerHTML = f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f}% and a Final grade of {required_midterm_and_final:.2f}%. "
-            Element("deansListerGrade").element.innerHTML = f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f}% and a Final grade of {required_midterm_and_final_90:.2f}%. "
+            Element("prelimGrade").element.innerHTML = f" {prelim_grade:.2f}%"
+            Element("midtermGrade75").element.innerHTML = f" {required_midterm_and_final:.2f}%"
+            Element("finalGrade75").element.innerHTML = f" {required_midterm_and_final:.2f}%"
+            Element("midtermGrade90").element.innerHTML = f" {required_midterm_and_final_90:.2f}%"
+            Element("finalGrade90").element.innerHTML = f" {required_midterm_and_final_90:.2f}%"
             # Show result section
             Element("result").element.style.display = "block"
 
