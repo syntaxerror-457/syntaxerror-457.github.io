@@ -80,7 +80,7 @@
     <div id="result" style="display: none;">
         <h2>Result:</h2>
         <p>Prelim Grade: <span id="prelimGrade"></span></p>
-        <p>Midterm Grade (required for 75%): <span id="midtermGrade75"></span>HAHAHAHA</p>
+        <p>To pass with 75%, you need a Midterm grade of <span id="midtermGrade75"></span>and a Final grade of <span id="finalGrade75"></span></p>
         <p>Finals Grade (required for 75%): <span id="finalGrade75"></span></p>
         <p>Midterm Grade (required for 90%): <span id="midtermGrade90"></span></p>
         <p>Finals Grade (required for 90%): <span id="finalGrade90"></span></p>
@@ -161,11 +161,11 @@
                 required_midterm_and_final_90 = 0
 
             # Update result display
-            Element("prelimGrade").element.innerHTML = f" {prelim_grade:.2f}%"
-            Element("midtermGrade75").element.innerHTML = f" {required_midterm_and_final:.2f}%"
-            Element("finalGrade75").element.innerHTML = f" {required_midterm_and_final:.2f}%"
-            Element("midtermGrade90").element.innerHTML = f" {required_midterm_and_final_90:.2f}%"
-            Element("finalGrade90").element.innerHTML = f" {required_midterm_and_final_90:.2f}%"
+            Element("prelimGrade").element.innerHTML = f" {prelim_grade:.2f}"
+            Element("midtermGrade75").element.innerHTML = f" {required_midterm_and_final:.2f}"
+            Element("finalGrade75").element.innerHTML = f" {required_midterm_and_final:.2f}"
+            Element("midtermGrade90").element.innerHTML = f" {required_midterm_and_final_90:.2f}"
+            Element("finalGrade90").element.innerHTML = f" {required_midterm_and_final_90:.2f}"
             # Show result section
             Element("result").element.style.display = "block"
 
