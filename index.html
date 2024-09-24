@@ -4,92 +4,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grade Calculator</title>
-    <!-- Include PyScript -->
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #212121; 
-            color: #e0e0e0; 
+            min-height: 100vh;
+            background-color: rgb(36, 37, 37);
         }
 
-        input {
-            margin: 8px;
-            padding: 10px;
-            border: 1px solid #424242; 
-            border-radius: 4px;
-            width: 200px;
-            background-color: #333;
-            color: #e0e0e0;
+        h1 {
+            color: #d6d6d6;
         }
 
-        button {
-            margin: 8px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            background-color: #00bcd4; 
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #000000;
+            border-radius: 5px;
+            background-color: #686868;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 15px;
+            background-color: #4CAF50;
             color: white;
-            font-size: 16px;
+            border: none;
+            border-radius: 3px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
         }
 
-        button:hover {
-            background-color: #0097a7;
+        h2 {
+            color: #929292;
+            margin-top: 20px;
         }
 
         p {
-            font-size: 18px;
-            font-weight: bold;
-            display: none; 
-            color: #e0e0e0;
-        }
-	h1 {
-            color: #d6d6d6;
-	}
-	h2 {
             color: #929292;
-            margin-top: 20px;
-	}
+        }
     </style>
 </head>
 <body>
-    <!-- HTML elements for user input -->
-	<h1>Prelim Grade Calculator</h1>
-    <input type="number" id="attendance" placeholder="Absences" />
-    <input type="number" id="recitation" placeholder="Recitation" />
-    <input type="number" id="quiz" placeholder="Quiz" />
-    <input type="number" id="requirements" placeholder="Requirements" />
-    <input type="number" id="prelim_exam" placeholder="Prelim Exam" />
-    <button id="calculateButton">Calculate Grades</button>
-    <p id="result"></p>
+    <h1>Grade Calculator</h1>
+    <form id="gradeForm">
+        <label for="attendance">Absences:</label>
+        <input type="number" id="attendance" name="attendance" required placeholder="Enter Absences"> 
+        <label for="recitation">Recitation:</label>
+        <input type="number" id="recitation" name="recitation" required placeholder="Enter Recitation"> 
+        <label for="quiz">Quiz:</label>
+        <input type="number" id="quiz" name="quiz" required placeholder="Enter Quiz"> 
+        <label for="requirements">Requirements:</label>
+        <input type="number" id="requirements" name="requirements" required placeholder="Enter Requirements"> 
+        <label for="prelim_exam">Prelim Exam:</label>
+        <input type="number" id="prelim_exam" name="prelim_exam" required placeholder="Enter Prelim Exam"> 
+        <button id="calculateBtn" type="submit">Calculate</button>
+    </form> 
 
-<!-- PyScript code -->
-<py-script>
-    from pyscript import Element
+    <div id="result" style="display: none;">
+        <h2>Result:</h2>
+        <p>Prelim Grade: <span id="prelimGrade"></span></p>
+        <p>Midterm Grade (required for 75%): <span id="midtermGrade75"></span></p>
+        <p>Finals Grade (required for 75%): <span id="finalGrade75"></span></p>
+        <p>Midterm Grade (required for 90%): <span id="midtermGrade90"></span></p>
+        <p>Finals Grade (required for 90%): <span id="finalGrade90"></span></p>
+    </div>
 
-    def calculate_grades(event):
-        try:
-            # Get values from inputs
-            absences = float(Element("attendance").element.value)
-            recitation = float(Element("recitation").element.value)
-            quiz = float(Element("quiz").element.value)
-            requirements = float(Element("requirements").element.value)
-            prelim_exam = float(Element("prelim_exam").element.value)
+    <p id="error" style="color: red;"></p>
+
+    <py-script>
+        from pyscript import Element
+
+        def reset_result():
+            """Function to reset the result display and error message."""
+            Element("result").element.style.display = "none"  # Hide the result section
+            Element("error").element.innerHTML = ""  # Clear error message
+            Element("prelimGrade").element.innerHTML = ""
+            Element("midtermGrade75").element.innerHTML = ""
+            Element("finalGrade75").element.innerHTML = ""
+            Element("midtermGrade90").element.innerHTML = ""
+            Element("finalGrade90").element.innerHTML = ""
+
+        def calculate_grade(event):
+            event.preventDefault()  # Prevent the form from refreshing the page
+            reset_result()  # Reset any previous result when recalculating
+            try:
+                absences = float(Element("attendance").element.value)
+                recitation = float(Element("recitation").element.value)
+                quiz = float(Element("quiz").element.value)
+                requirements = float(Element("requirements").element.value)
+                prelim_exam = float(Element("prelim_exam").element.value)
+            except ValueError:
+                Element("error").element.innerHTML = "Please enter a valid input."
+                return
 
             # Check if values are within the range of 0 to 100
             if not (0 <= absences <= 100 and 0 <= recitation <= 100 and 0 <= quiz <= 100 and 0 <= requirements <= 100 and 0 <= prelim_exam <= 100):
-                Element("result").write("Error: You Can Only Enter Numbers Between 0 and 100.")
-                Element("result").element.style.display = "block"
-                Element("result").element.style.color = "red"  
+                Element("error").element.innerHTML = "Please enter a valid input between 0 and 100."
                 return
 
             # Calculate attendance
@@ -97,9 +124,7 @@
 
             # Check if absences are 4 or more
             if absences >= 4:
-                Element("result").write("You Failed Due to the Amount of Absences")
-                Element("result").element.style.display = "block"
-                Element("result").element.style.color = "red"
+                Element("error").element.innerHTML = "You Failed Due to the Amount of Absences"
                 return
 
             # Calculate performance task and overall performance
@@ -135,22 +160,16 @@
             else:
                 required_midterm_and_final_90 = 0
 
-            # Update the content of the result element
-            result_text = f"Your Prelim Grade is: {prelim_grade:.2f}\n"
-            result_text += f"To pass with 75%, you need a Midterm grade of {required_midterm_and_final:.2f} and a Final grade of {required_midterm_and_final:.2f}.\n"
-            result_text += f"To achieve 90%, you need a Midterm grade of {required_midterm_and_final_90:.2f} and a Final grade of {required_midterm_and_final_90:.2f}."
-
-            Element("result").write(result_text)
-
-            # Show the result section
+            # Update result display
+            Element("prelimGrade").element.innerHTML = f" {prelim_grade:.2f}%"
+            Element("midtermGrade75").element.innerHTML = f" {required_midterm_and_final:.2f}%"
+            Element("finalGrade75").element.innerHTML = f" {required_midterm_and_final:.2f}%"
+            Element("midtermGrade90").element.innerHTML = f" {required_midterm_and_final_90:.2f}%"
+            Element("finalGrade90").element.innerHTML = f" {required_midterm_and_final_90:.2f}%"
+            # Show result section
             Element("result").element.style.display = "block"
-        except ValueError:
-            Element("result").write("Invalid input. Please enter numbers only.")
-            Element("result").element.style.display = "block"
-            Element("result").element.style.color = "red"  
 
-    # Attach event listener to the button
-    Element("calculateButton").element.onclick = calculate_grades
-</py-script>
+        Element("calculateBtn").element.onclick = calculate_grade
+    </py-script>
 </body>
 </html>
