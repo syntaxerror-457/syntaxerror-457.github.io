@@ -74,7 +74,7 @@
         <input type="number" id="requirements" name="requirements" required placeholder="Enter Requirements"> 
         <label for="prelim_exam">Prelim Exam:</label>
         <input type="number" id="prelim_exam" name="prelim_exam" required placeholder="Enter Prelim Exam"> 
-        <button id="calculateBtn" type="submit">Calculate</button>
+        <button id="calculateBtn" type="button">Calculate</button>
     </form> 
 
     <div id="result" style="display: none;">
@@ -97,8 +97,7 @@
             Element("passingGrade").element.innerHTML = ""
             Element("deansListerGrade").element.innerHTML = ""
 
-        def calculate_grade(event):
-            event.preventDefault()  # Prevent the form from refreshing the page
+        def calculate_grade():
             reset_result()  # Reset any previous result when recalculating
             try:
                 absences = float(Element("attendance").element.value)
@@ -111,7 +110,7 @@
                 return
 
             # Check if values are within the range of 0 to 100
-            if not (0 <= absences <= 100 and 0 <= recitation <= 100 and 0 <= quiz <= 100 and 0 <= requirements <= 100 and 0 <= prelim_exam <= 100):
+            if not (0 <= absences <= 100 and 0 <= recitation <= 100 and 0 <= quiz <= 100 and 0 <= requirements <= 100 and 0 <= prelim_exam <= 100 ):
                 Element("error").element.innerHTML = "Please enter a valid input between 0 and 100."
                 return
 
